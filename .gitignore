@@ -2,6 +2,7 @@
 vmlinux.h
 *.skel.h
 xdp_tailcall
+*.bc
 
 # Prerequisites
 *.d
