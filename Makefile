@@ -20,21 +20,25 @@ CFLAGS_USER    ?= -g -O2
 LDFLAGS_USER   ?= -lelf -lbpf
 
 # ---- default target ---------------------------------------------
-all: $(USER_BIN)
+all: vmlinux.h $(USER_BIN)
 
-# 1. compile the kernel program
+# 1. generate vmlinux.h from BTF
+vmlinux.h:
+	$(BPFTOOL) btf dump file /sys/kernel/btf/vmlinux format c > $@
+
+# 2. compile the kernel program
 $(BPF_OBJ): $(BPF_SRC)
 	$(CLANG) $(CFLAGS_BPF) -c $< -o $@
 
-# 2. generate skeleton
+# 3. generate skeleton
 $(SKEL_HEADER): $(BPF_OBJ)
 	$(BPFTOOL) gen skeleton $< > $@
 
-# 3a. build user-space object files
+# 4a. build user-space object files
 %.o: %.c $(SKEL_HEADER)
 	$(CC) $(CFLAGS_USER) -c $< -o $@
 
-# 3b. link the final loader binary
+# 4b. link the final loader binary
 $(USER_BIN): $(USER_OBJS)
 	$(CC) $(CFLAGS_USER) $^ -o $@ $(LDFLAGS_USER)
 
