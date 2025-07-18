@@ -17,10 +17,11 @@ static volatile bool exiting =
 static int ifindex = -1; // Interface index for the XDP program
 static struct xdp_tailcall_bpf *skel; // BPF skeleton structure
 
-static void sig_handler(int sig) { exiting = true; }
+static void sig_handler(int sig __attribute__((unused))) { exiting = true; }
 
-static int libbpf_print_fn(enum libbpf_print_level level, const char *format,
-                           va_list args) {
+static int libbpf_print_fn(enum libbpf_print_level level
+                           __attribute__((unused)),
+                           const char *format, va_list args) {
   return vfprintf(stderr, format, args);
 }
 
