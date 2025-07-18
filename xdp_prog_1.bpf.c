@@ -11,7 +11,7 @@ int xdp_prog_1(struct xdp_md *ctx) {
   bpf_printk("eBPF program #1: I'm the first tail call, calling next...\n");
 
   // tail call to the program at index 1 in the prog_array map
-  bpf_tail_call(ctx, &prog_array, 1);
+  bpf_tail_call(ctx, &prog_array, TAIL_CALL_PROG_2);
 
   bpf_printk("eBPF program #1: Tail call failed, drop the packet\n");
   return XDP_DROP;

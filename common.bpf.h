@@ -3,10 +3,9 @@
 #ifndef __COMMON_BPF_H
 #define __COMMON_BPF_H
 
+#include "shared.h"
 #include "vmlinux.h"
 #include <bpf/bpf_helpers.h>
-
-#define MAX_TAIL_CALLS 2
 
 char LICENSE[] SEC("license") __attribute__((weak)) = "GPL";
 

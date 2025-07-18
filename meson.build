@@ -75,7 +75,7 @@ skel_h = custom_target(
 # 7. User-space Loader Executable
 executable(
   'xdp_tailcall',
-  sources: ['xdp_tailcall.c', skel_h],
+  sources: ['xdp_tailcall.c', skel_h, 'shared.h'],
   include_directories: include_directories('.'),
   dependencies: [
     libbpf_dep,

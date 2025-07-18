@@ -13,7 +13,7 @@ int xdp_prog_entry(struct xdp_md *ctx) {
   bpf_printk("eBPF program #0 (entry): I'm attached! Doing a tail call...\n");
 
   // tail call to the program at index 0 in the prog_array map.
-  bpf_tail_call(ctx, &prog_array, 0);
+  bpf_tail_call(ctx, &prog_array, TAIL_CALL_PROG_1);
 
   // If the tail call fails, we will drop the packet.
   // This code will only execute if the tail call fails.
